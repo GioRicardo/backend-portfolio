@@ -1,9 +1,8 @@
 package com.diplomado.backendportfolio.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 public class Programador {
@@ -15,6 +14,14 @@ public class Programador {
     private String telefono;
     private String descripcion;
     private String imagen;
+
+    @ManyToMany
+    @JoinTable(
+            name = "programador_proyecto",
+            joinColumns = @JoinColumn(name = "programador_id"),
+            inverseJoinColumns = @JoinColumn(name = "proyecto_id")
+    )
+    private Set<Proyecto> proyectos;
 
 
     public Programador() {
@@ -66,5 +73,13 @@ public class Programador {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public Set<Proyecto> getProyectos() {
+        return proyectos;
+    }
+
+    public void setProyectos(Set<Proyecto> proyectos) {
+        this.proyectos = proyectos;
     }
 }
